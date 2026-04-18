@@ -1,11 +1,42 @@
 title: Kyle Woolford
-email: kyle.woolford@gmail.com
+tagline: Research notebook.
+identity: >-
+  Projects, notes, and digests — working log of what I'm building
+  and what I'm thinking about while building it.
 description: >-
-  Projects, notes, and digests.
-theme: minima
+  Research notebook for projects, notes, and digests by Kyle Woolford.
+author: Kyle Woolford
+email: kyle.woolford@gmail.com
+url: "https://kwoolford.github.io"
+
+# Local theme — no `theme:` key means Jekyll uses this repo's _layouts/_includes/_sass.
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
-# Split feed posts by category on the home page via the minima theme defaults.
+# Pretty URLs: /project/slug/ or /note/slug/
+permalink: /:categories/:title/
+
+sass:
+  style: compressed
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor/
+  - .bundle/
+
 show_excerpts: true

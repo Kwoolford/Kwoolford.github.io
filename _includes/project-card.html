@@ -1,0 +1,45 @@
+{%- assign p = include.project -%}
+{%- assign stack = p.stack | default: p.tags -%}
+{%- assign status_slug = p.status | default: '' | downcase -%}
+{%- capture data_tags %}{% for t in stack %}{{ t | downcase }} {% endfor %}{% endcapture -%}
+<article class="card"
+  data-title="{{ p.title | downcase | escape }}"
+  data-tags="{{ data_tags | strip }}"
+  data-status="{{ status_slug }}"
+  data-category="{{ p.categories | first | downcase }}">
+  <a class="card-link" href="{{ p.url | relative_url }}">
+    <header class="card-head">
+      <h3 class="card-title">{{ p.title }}</h3>
+      {%- if p.status -%}
+      <span class="status status-{{ status_slug }}" title="status: {{ p.status }}">
+        <span class="status-dot" aria-hidden="true"></span>{{ p.status | downcase }}
+      </span>
+      {%- endif -%}
+    </header>
+    <p class="card-summary">
+      {%- if p.summary -%}
+        {{ p.summary | strip_newlines | strip_html | truncate: 220 }}
+      {%- else -%}
+        {{ p.excerpt | strip_html | strip_newlines | truncate: 220 }}
+      {%- endif -%}
+    </p>
+    <dl class="card-meta">
+      <div class="meta-row">
+        <dt>category</dt>
+        <dd>{{ p.categories | first | default: 'post' }}</dd>
+      </div>
+      {%- if stack.size > 0 -%}
+      <div class="meta-row">
+        <dt>stack</dt>
+        <dd class="tag-list">
+          {%- for t in stack limit: 6 -%}<span class="tag">{{ t }}</span>{%- endfor -%}
+        </dd>
+      </div>
+      {%- endif -%}
+      <div class="meta-row">
+        <dt>updated</dt>
+        <dd><time datetime="{{ p.date | date_to_xmlschema }}">{{ p.date | date: "%Y-%m-%d" }}</time></dd>
+      </div>
+    </dl>
+  </a>
+</article>

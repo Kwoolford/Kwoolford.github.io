@@ -1,0 +1,16 @@
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p class="footer-col">
+      <span>{{ site.title | downcase }}</span>
+      <span class="footer-sep">·</span>
+      <span>{{ site.time | date: '%Y' }}</span>
+    </p>
+    <p class="footer-col footer-right">
+      <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+      <span class="footer-sep">·</span>
+      <a href="{{ '/feed.xml' | relative_url }}">feed</a>
+      <span class="footer-sep">·</span>
+      <span>built with jekyll</span>
+    </p>
+  </div>
+</footer>

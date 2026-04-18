@@ -22,9 +22,13 @@
   const lbClose    = document.getElementById('lightbox-close');
   if (!lightbox || !lbImg) return;
 
-  function open(src, alt) {
+  function open(src, alt, naturalWidth) {
     lbImg.src = src;
     lbImg.alt = alt || '';
+    // Don't upscale past natural pixel width
+    lbImg.style.maxWidth = naturalWidth
+      ? 'min(90vw, ' + naturalWidth + 'px)'
+      : '90vw';
     lightbox.classList.add('open');
     document.body.style.overflow = 'hidden';
     lbClose.focus();
@@ -38,7 +42,7 @@
 
   // Wire up all media images (strip + grid)
   document.querySelectorAll('.media-item img, .media-grid-item img').forEach(img => {
-    img.addEventListener('click', () => open(img.src, img.alt));
+    img.addEventListener('click', () => open(img.src, img.alt, img.naturalWidth));
   });
 
   // Close on backdrop click (not on image itself)

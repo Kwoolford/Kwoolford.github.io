@@ -1,0 +1,11 @@
+title: Kyle Woolford
+email: kyle.woolford@gmail.com
+description: >-
+  Projects, notes, and digests.
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Split feed posts by category on the home page via the minima theme defaults.
+show_excerpts: true

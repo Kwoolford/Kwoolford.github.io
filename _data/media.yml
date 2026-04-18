@@ -1,13 +1,42 @@
-# Media catalog — add entries here to populate the homepage strip and media page.
-# Images go in assets/media/. Supported: jpg, png, gif, webp.
-#
-# - src: /assets/media/your-image.jpg
-#   alt: Short description (used for accessibility)
-#   caption: Optional caption shown on media page
-#   date: 2026-04-18
-#
-# Example entry (remove the # to activate):
-# - src: /assets/media/example.jpg
-#   alt: An example image
-#   caption: Caption text here
-#   date: 2026-04-18
+# Media catalog — add entries here to populate the homepage strip and /media/ page.
+# Images live in assets/media/. Newest first.
+
+- src: /assets/media/planet_pizza_rings.png
+  alt: A planet with rings made of pizza slices
+  caption: Planet Pizza Rings
+  date: 2026-04-18
+
+- src: /assets/media/cosmic_cake.png
+  alt: A layered cake floating in space
+  caption: Cosmic Cake
+  date: 2026-04-18
+
+- src: /assets/media/space_eclair.png
+  alt: An éclair drifting through outer space
+  caption: Space Éclair
+  date: 2026-04-18
+
+- src: /assets/media/cheesiest_pizza.png
+  alt: An absurdly cheesy pizza
+  caption: The Cheesiest Pizza
+  date: 2026-04-18
+
+- src: /assets/media/tiramisu_bed.png
+  alt: A bed made of tiramisu layers
+  caption: Tiramisu Bed
+  date: 2026-04-18
+
+- src: /assets/media/volcanic_bread.png
+  alt: A loaf of bread erupting like a volcano
+  caption: Volcanic Bread
+  date: 2026-04-18
+
+- src: /assets/media/fruit_bonsai.png
+  alt: A bonsai tree growing fruit instead of leaves
+  caption: Fruit Bonsai
+  date: 2026-04-18
+
+- src: /assets/media/serene_lake.png
+  alt: A serene lake landscape
+  caption: Serene Lake
+  date: 2026-04-18

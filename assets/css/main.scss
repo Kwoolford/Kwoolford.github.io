@@ -166,18 +166,16 @@ img { max-width: 100%; height: auto; display: block; }
   gap: var(--s3);
 }
 .media-item {
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
   background: var(--bg-alt);
 }
 .media-item[hidden] { display: none; }
 .media-item img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  display: block;
   transition: transform 0.3s ease;
 }
-.media-item:hover img { transform: scale(1.03); }
+.media-item:hover img { transform: scale(1.02); }
 
 // ============================================================
 // Section headings
@@ -596,11 +594,11 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .media-grid-item img {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  height: auto;
+  display: block;
   transition: transform 0.3s;
 }
-.media-grid-item:hover img { transform: scale(1.03); }
+.media-grid-item:hover img { transform: scale(1.02); }
 .media-grid-caption {
   padding: var(--s3) var(--s4);
   font-size: 0.875rem;

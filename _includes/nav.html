@@ -1,13 +1,10 @@
 <header class="site-nav">
   <div class="wrap nav-inner">
-    <a class="brand" href="{{ '/' | relative_url }}">
-      <span class="brand-mark">{% include brand-mark.html %}</span>
-      <span class="brand-name">{{ site.title | downcase }}</span>
-    </a>
+    <a class="brand" href="{{ '/' | relative_url }}">{{ site.title }}</a>
     <nav class="nav-links" aria-label="primary">
-      <a href="{{ '/' | relative_url }}">index</a>
+      <a href="{{ '/' | relative_url }}">home</a>
       <a href="{{ '/archive/' | relative_url }}">archive</a>
-      <a href="{{ '/feed.xml' | relative_url }}">feed</a>
+      <a href="{{ '/media/' | relative_url }}">media</a>
     </nav>
   </div>
 </header>

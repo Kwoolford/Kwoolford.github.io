@@ -2,61 +2,50 @@
 layout: default
 ---
 {%- assign all_projects = site.posts | where: "categories", "project" -%}
-{%- assign featured = all_projects | where: "featured", true -%}
 {%- assign notes = site.posts | where: "categories", "note" -%}
+{%- assign media_items = site.data.media -%}
 
 <section class="hero wrap">
-  <p class="hero-kicker">
-    <span class="accent-dot" aria-hidden="true"></span>
-    <span>{{ site.title | downcase }} — research notebook</span>
-  </p>
-  <h1 class="hero-title">{{ site.title }}</h1>
+  <h1 class="hero-name">{{ site.title }}</h1>
   <p class="hero-tagline">{{ site.identity | default: site.description | strip_newlines }}</p>
 </section>
 
-{%- if site.data.now and site.data.now.text -%}
-<section class="now wrap">
-  <h2 class="section-label"><span class="accent-dot" aria-hidden="true"></span>now</h2>
-  <div class="now-body">{{ site.data.now.text | markdownify }}</div>
-  {%- if site.data.now.updated -%}
-  <p class="now-meta">
-    <time datetime="{{ site.data.now.updated }}">{{ site.data.now.updated | date: "%Y-%m-%d" }}</time>
-  </p>
-  {%- endif -%}
-</section>
-{%- endif -%}
-
-{%- if featured.size > 0 -%}
-<section class="featured wrap">
-  <h2 class="section-label">featured</h2>
-  <div class="card-grid">
-    {%- for p in featured limit: 6 -%}
-      {%- include project-card.html project=p -%}
+{%- if media_items and media_items.size > 0 -%}
+<section class="media-strip wrap">
+  <div class="media-strip-head">
+    <span class="media-strip-label">photos &amp; media</span>
+    <a class="media-strip-link" href="{{ '/media/' | relative_url }}">see all →</a>
+  </div>
+  <div class="media-strip-grid" id="media-strip-grid">
+    {%- for item in media_items -%}
+    <div class="media-item" data-media>
+      <img src="{{ item.src | relative_url }}" alt="{{ item.alt | default: '' }}" loading="lazy">
+    </div>
     {%- endfor -%}
   </div>
 </section>
 {%- endif -%}
 
-<section class="archive-section wrap">
+<section class="projects-section wrap">
   <div class="section-head">
-    <h2 class="section-label">projects <span class="section-count">{{ all_projects.size }}</span></h2>
-    <div class="archive-controls">
-      <input id="archive-search" class="search-input" type="search" placeholder="filter by title, tag, status…" autocomplete="off" spellcheck="false">
-    </div>
+    <h2 class="section-title">Projects</h2>
+    <input id="archive-search" class="search-input" type="search" placeholder="filter projects…" autocomplete="off" spellcheck="false">
   </div>
-  <div class="card-grid" id="archive-grid" data-grid>
+  <div class="card-grid" id="archive-grid">
     {%- for p in all_projects -%}
       {%- include project-card.html project=p -%}
     {%- endfor -%}
   </div>
-  <p class="archive-empty" id="archive-empty" hidden>no entries match that filter.</p>
+  <p class="archive-empty" id="archive-empty" hidden>no projects match that filter.</p>
 </section>
 
 {%- if notes.size > 0 -%}
 <section class="notes-section wrap">
-  <h2 class="section-label">notes</h2>
+  <div class="section-head">
+    <h2 class="section-title">Notes</h2>
+  </div>
   <ul class="note-list">
-    {%- for n in notes limit: 10 -%}
+    {%- for n in notes limit: 8 -%}
     <li class="note-item">
       <time class="note-date" datetime="{{ n.date | date_to_xmlschema }}">{{ n.date | date: "%Y-%m-%d" }}</time>
       <a class="note-title" href="{{ n.url | relative_url }}">{{ n.title }}</a>
@@ -65,26 +54,3 @@ layout: default
   </ul>
 </section>
 {%- endif -%}
-
-<section class="meta-panel wrap" aria-label="site status">
-  <div class="meta-grid">
-    <div class="meta-cell">
-      <span class="meta-label">projects</span>
-      <span class="meta-value">{{ all_projects.size }}</span>
-    </div>
-    <div class="meta-cell">
-      <span class="meta-label">notes</span>
-      <span class="meta-value">{{ notes.size }}</span>
-    </div>
-    <div class="meta-cell">
-      <span class="meta-label">last entry</span>
-      <span class="meta-value">
-        {%- if site.posts.first -%}{{ site.posts.first.date | date: "%Y-%m-%d" }}{%- else -%}—{%- endif -%}
-      </span>
-    </div>
-    <div class="meta-cell">
-      <span class="meta-label">build</span>
-      <span class="meta-value">{{ site.time | date: "%Y-%m-%d" }}</span>
-    </div>
-  </div>
-</section>

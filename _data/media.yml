@@ -1,0 +1,13 @@
+# Media catalog — add entries here to populate the homepage strip and media page.
+# Images go in assets/media/. Supported: jpg, png, gif, webp.
+#
+# - src: /assets/media/your-image.jpg
+#   alt: Short description (used for accessibility)
+#   caption: Optional caption shown on media page
+#   date: 2026-04-18
+#
+# Example entry (remove the # to activate):
+# - src: /assets/media/example.jpg
+#   alt: An example image
+#   caption: Caption text here
+#   date: 2026-04-18

@@ -1,20 +1,16 @@
 title: Kyle Woolford
-tagline: Research notebook.
 identity: >-
-  Projects, notes, and digests — working log of what I'm building
-  and what I'm thinking about while building it.
+  Building things, thinking about ML and AI, and logging the process.
 description: >-
-  Research notebook for projects, notes, and digests by Kyle Woolford.
+  Personal site — projects, notes, and media by Kyle Woolford.
 author: Kyle Woolford
 email: kyle.woolford@gmail.com
 url: "https://kwoolford.github.io"
 
-# Local theme — no `theme:` key means Jekyll uses this repo's _layouts/_includes/_sass.
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
-# Pretty URLs: /project/slug/ or /note/slug/
 permalink: /:categories/:title/
 
 sass:

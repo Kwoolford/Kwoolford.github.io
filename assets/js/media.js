@@ -38,7 +38,6 @@
 
   // Wire up all media images (strip + grid)
   document.querySelectorAll('.media-item img, .media-grid-item img').forEach(img => {
-    img.closest('.media-item, .media-grid-item').style.cursor = 'zoom-in';
     img.addEventListener('click', () => open(img.src, img.alt));
   });
 

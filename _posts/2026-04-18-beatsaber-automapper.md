@@ -37,7 +37,7 @@ The goal is to replicate what good human mappers do — density planning, swing-
 
 All stages share one audio encoder: 4-layer CNN frontend → sinusoidal positional encoding → 6-layer transformer (d\_model=512). Trained end-to-end on Beat Saber map data — no pretrained speech weights, because what matters here is low-level rhythmic structure, not semantics.
 
-> **Note.** RTX 5090 (sm\_120) requires PyTorch nightly with `cu128`; stable wheels don't yet compile for Blackwell.
+> **Note.** Trained with a RTX 5090 (sm\_120) requires PyTorch nightly with `cu128`; stable wheels don't yet compile for Blackwell.
 
 ## Links
 

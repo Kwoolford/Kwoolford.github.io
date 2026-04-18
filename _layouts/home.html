@@ -29,14 +29,12 @@ layout: default
 <section class="projects-section wrap">
   <div class="section-head">
     <h2 class="section-title">Projects</h2>
-    <input id="archive-search" class="search-input" type="search" placeholder="filter projects…" autocomplete="off" spellcheck="false">
   </div>
-  <div class="card-grid" id="archive-grid">
+  <div class="card-grid">
     {%- for p in all_projects -%}
       {%- include project-card.html project=p -%}
     {%- endfor -%}
   </div>
-  <p class="archive-empty" id="archive-empty" hidden>no projects match that filter.</p>
 </section>
 
 {%- if notes.size > 0 -%}

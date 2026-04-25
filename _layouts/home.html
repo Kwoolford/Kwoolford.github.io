@@ -11,17 +11,19 @@ layout: default
 </section>
 
 {%- if media_items and media_items.size > 0 -%}
-<section class="media-strip wrap">
-  <div class="media-strip-head">
+<section class="media-strip">
+  <div class="media-strip-head wrap">
     <span class="media-strip-label">photos &amp; media</span>
     <a class="media-strip-link" href="{{ '/media/' | relative_url }}">see all →</a>
   </div>
-  <div class="media-strip-grid" id="media-strip-grid">
-    {%- for item in media_items -%}
-    <div class="media-item" data-media>
-      <img src="{{ item.src | relative_url }}" alt="{{ item.alt | default: '' }}" loading="lazy">
+  <div class="media-carousel">
+    <div class="carousel-track" id="media-strip-grid">
+      {%- for item in media_items -%}
+      <div class="media-item" data-media>
+        <img src="{{ item.src | relative_url }}" alt="{{ item.alt | default: '' }}" loading="lazy">
+      </div>
+      {%- endfor -%}
     </div>
-    {%- endfor -%}
   </div>
 </section>
 {%- endif -%}

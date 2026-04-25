@@ -1,31 +1,22 @@
 (function () {
-  // ── Random strip (homepage) ──────────────────────────────────
-  const grid = document.getElementById('media-strip-grid');
-  if (grid) {
-    const items = Array.from(grid.querySelectorAll('[data-media]'));
-    if (items.length > 3) {
-      const shuffled = items.slice();
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-      const show = new Set(shuffled.slice(0, 3));
-      for (const item of items) {
-        item.hidden = !show.has(item);
-      }
-    }
+  // ── Carousel (homepage) ──────────────────────────────────────
+  const track = document.getElementById('media-strip-grid');
+  if (track) {
+    // Duplicate children for seamless infinite loop (-50% = one full copy)
+    Array.from(track.children).forEach(item => {
+      track.appendChild(item.cloneNode(true));
+    });
   }
 
   // ── Lightbox ─────────────────────────────────────────────────
-  const lightbox   = document.getElementById('lightbox');
-  const lbImg      = document.getElementById('lightbox-img');
-  const lbClose    = document.getElementById('lightbox-close');
+  const lightbox = document.getElementById('lightbox');
+  const lbImg    = document.getElementById('lightbox-img');
+  const lbClose  = document.getElementById('lightbox-close');
   if (!lightbox || !lbImg) return;
 
   function open(src, alt, naturalWidth) {
     lbImg.src = src;
     lbImg.alt = alt || '';
-    // Don't upscale past natural pixel width
     lbImg.style.maxWidth = naturalWidth
       ? 'min(90vw, ' + naturalWidth + 'px)'
       : '90vw';
@@ -40,7 +31,18 @@
     lbImg.src = '';
   }
 
-  // Span landscape images across 2 grid columns
+  // Event delegation covers both originals and clones in the carousel
+  document.querySelector('.media-carousel')?.addEventListener('click', e => {
+    const img = e.target.closest('.media-item img');
+    if (img) open(img.src, img.alt, img.naturalWidth);
+  });
+
+  // Wire up the full media grid on /media/ page
+  document.querySelectorAll('.media-grid-item img').forEach(img => {
+    img.addEventListener('click', () => open(img.src, img.alt, img.naturalWidth));
+  });
+
+  // Detect landscape images on the /media/ grid and span 2 columns
   document.querySelectorAll('.media-grid-item img').forEach(img => {
     function checkLandscape() {
       if (img.naturalWidth > img.naturalHeight) {
@@ -51,12 +53,7 @@
     else img.addEventListener('load', checkLandscape);
   });
 
-  // Wire up all media images (strip + grid)
-  document.querySelectorAll('.media-item img, .media-grid-item img').forEach(img => {
-    img.addEventListener('click', () => open(img.src, img.alt, img.naturalWidth));
-  });
-
-  // Close on backdrop click (not on image itself)
+  // Close on backdrop click
   lightbox.addEventListener('click', e => {
     if (e.target !== lbImg) close();
   });

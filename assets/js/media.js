@@ -1,51 +1,53 @@
 (function () {
-  // ── Slot carousel (homepage) ─────────────────────────────────
-  const grid = document.getElementById('media-strip-grid');
-  if (grid) {
-    const allItems = Array.from(grid.querySelectorAll('[data-media]'));
+  // ── Sliding carousel (homepage) ──────────────────────────────
+  const track    = document.getElementById('media-strip-grid');
+  const viewport = track && track.closest('.media-carousel-viewport');
+  const prevBtn  = document.querySelector('.carousel-prev');
+  const nextBtn  = document.querySelector('.carousel-next');
 
-    if (allItems.length > 3) {
-      // Build a shuffled pool of { src, alt }
-      const pool = allItems.map(item => {
-        const img = item.querySelector('img');
-        return { src: img.src, alt: img.alt };
-      });
-      for (let i = pool.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [pool[i], pool[j]] = [pool[j], pool[i]];
-      }
+  if (track && viewport) {
+    const slides  = Array.from(track.querySelectorAll('[data-media]'));
+    const GAP     = 12; // matches --s3 (0.75rem @ 16px)
+    const VISIBLE = 3;
+    let idx       = 0;
+    let autoTimer;
 
-      // Keep only 3 slots; remove the rest from the DOM
-      allItems.slice(3).forEach(item => item.remove());
-      const slots = allItems.slice(0, 3);
-
-      // Seed slots from the shuffled pool
-      slots.forEach((slot, i) => {
-        const img = slot.querySelector('img');
-        img.src = pool[i].src;
-        img.alt = pool[i].alt;
-      });
-
-      let poolIdx = 3;   // next image to pull from pool
-      let slotIdx = 0;   // which slot to swap next
-
-      // Every 3s swap one slot, cycling left-to-right through slots
-      setInterval(() => {
-        const slot = slots[slotIdx % 3];
-        slotIdx++;
-        const img = slot.querySelector('img');
-        const next = pool[poolIdx % pool.length];
-        poolIdx++;
-
-        slot.classList.add('fading');
-        setTimeout(() => {
-          img.onload = () => slot.classList.remove('fading');
-          img.src = next.src;
-          img.alt = next.alt;
-          if (img.complete) slot.classList.remove('fading');
-        }, 600); // wait for fade-out (matches CSS transition)
-      }, 3000);
+    function slideWidth() {
+      return (viewport.offsetWidth - (VISIBLE - 1) * GAP) / VISIBLE;
     }
+
+    function applyWidths() {
+      const w = slideWidth();
+      slides.forEach(s => { s.style.width = w + 'px'; });
+    }
+
+    function updateButtons() {
+      if (prevBtn) prevBtn.disabled = idx === 0;
+      if (nextBtn) nextBtn.disabled = idx >= slides.length - VISIBLE;
+    }
+
+    function goTo(n) {
+      idx = Math.max(0, Math.min(n, slides.length - VISIBLE));
+      track.style.transform = `translateX(-${idx * (slideWidth() + GAP)}px)`;
+      updateButtons();
+    }
+
+    function startAuto() {
+      autoTimer = setInterval(() => {
+        goTo(idx < slides.length - VISIBLE ? idx + 1 : 0);
+      }, 5000);
+    }
+
+    function resetAuto() { clearInterval(autoTimer); startAuto(); }
+
+    applyWidths();
+    goTo(0);
+    startAuto();
+
+    if (prevBtn) prevBtn.addEventListener('click', () => { goTo(idx - 1); resetAuto(); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { goTo(idx + 1); resetAuto(); });
+
+    window.addEventListener('resize', () => { applyWidths(); goTo(idx); });
   }
 
   // ── Lightbox ─────────────────────────────────────────────────
@@ -57,9 +59,7 @@
   function open(src, alt, naturalWidth) {
     lbImg.src = src;
     lbImg.alt = alt || '';
-    lbImg.style.maxWidth = naturalWidth
-      ? 'min(90vw, ' + naturalWidth + 'px)'
-      : '90vw';
+    lbImg.style.maxWidth = naturalWidth ? 'min(90vw, ' + naturalWidth + 'px)' : '90vw';
     lightbox.classList.add('open');
     document.body.style.overflow = 'hidden';
     lbClose.focus();
@@ -71,30 +71,25 @@
     lbImg.src = '';
   }
 
-  // Wire carousel slots (uses current img src at click time)
-  document.querySelectorAll('.media-strip-grid .media-item img').forEach(img => {
+  document.querySelectorAll('.media-item img').forEach(img => {
     img.addEventListener('click', () => open(img.src, img.alt, img.naturalWidth));
   });
 
-  // Wire full media grid on /media/ page
   document.querySelectorAll('.media-grid-item img').forEach(img => {
     img.addEventListener('click', () => open(img.src, img.alt, img.naturalWidth));
   });
 
-  // Detect landscape images on /media/ grid and span 2 columns
+  // Detect landscape images on /media/ grid
   document.querySelectorAll('.media-grid-item img').forEach(img => {
-    function checkLandscape() {
-      if (img.naturalWidth > img.naturalHeight) {
+    function check() {
+      if (img.naturalWidth > img.naturalHeight)
         img.closest('.media-grid-item').classList.add('landscape');
-      }
     }
-    if (img.complete && img.naturalWidth) checkLandscape();
-    else img.addEventListener('load', checkLandscape);
+    if (img.complete && img.naturalWidth) check();
+    else img.addEventListener('load', check);
   });
 
-  lightbox.addEventListener('click', e => {
-    if (e.target !== lbImg) close();
-  });
+  lightbox.addEventListener('click', e => { if (e.target !== lbImg) close(); });
   lbClose.addEventListener('click', close);
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && lightbox.classList.contains('open')) close();

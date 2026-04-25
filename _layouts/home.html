@@ -16,12 +16,18 @@ layout: default
     <span class="media-strip-label">photos &amp; media</span>
     <a class="media-strip-link" href="{{ '/media/' | relative_url }}">see all →</a>
   </div>
-  <div class="media-strip-grid" id="media-strip-grid">
-    {%- for item in media_items -%}
-    <div class="media-item" data-media>
-      <img src="{{ item.src | relative_url }}" alt="{{ item.alt | default: '' }}" loading="lazy">
+  <div class="media-carousel-wrapper">
+    <button class="carousel-btn carousel-prev" aria-label="Previous">&#8249;</button>
+    <div class="media-carousel-viewport">
+      <div class="media-carousel-track" id="media-strip-grid">
+        {%- for item in media_items -%}
+        <div class="media-item" data-media>
+          <img src="{{ item.src | relative_url }}" alt="{{ item.alt | default: '' }}" loading="lazy">
+        </div>
+        {%- endfor -%}
+      </div>
     </div>
-    {%- endfor -%}
+    <button class="carousel-btn carousel-next" aria-label="Next">&#8250;</button>
   </div>
 </section>
 {%- endif -%}

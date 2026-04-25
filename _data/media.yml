@@ -1,6 +1,36 @@
 # Media catalog — add entries here to populate the homepage strip and /media/ page.
 # Images live in assets/media/. Newest first.
 
+- src: /assets/media/whipped_marscarpone_graham.png
+  alt: Whipped mascarpone with graham crackers
+  caption: Whipped Mascarpone Graham
+  date: 2026-04-25
+
+- src: /assets/media/whipped_chicken.png
+  alt: A whipped chicken dish
+  caption: Whipped Chicken
+  date: 2026-04-25
+
+- src: /assets/media/quiche_express.png
+  alt: A quick express quiche
+  caption: Quiche Express
+  date: 2026-04-25
+
+- src: /assets/media/peanut_butter_drink.png
+  alt: A peanut butter drink
+  caption: Peanut Butter Drink
+  date: 2026-04-25
+
+- src: /assets/media/expresso_loafs.png
+  alt: Espresso-flavored loaf cakes
+  caption: Expresso Loafs
+  date: 2026-04-25
+
+- src: /assets/media/croque_madame.png
+  alt: A croque madame sandwich
+  caption: Croque Madame
+  date: 2026-04-25
+
 - src: /assets/media/planet_pizza_rings.png
   alt: A planet with rings made of pizza slices
   caption: Planet Pizza Rings

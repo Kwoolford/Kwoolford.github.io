@@ -40,6 +40,17 @@
     lbImg.src = '';
   }
 
+  // Span landscape images across 2 grid columns
+  document.querySelectorAll('.media-grid-item img').forEach(img => {
+    function checkLandscape() {
+      if (img.naturalWidth > img.naturalHeight) {
+        img.closest('.media-grid-item').classList.add('landscape');
+      }
+    }
+    if (img.complete && img.naturalWidth) checkLandscape();
+    else img.addEventListener('load', checkLandscape);
+  });
+
   // Wire up all media images (strip + grid)
   document.querySelectorAll('.media-item img, .media-grid-item img').forEach(img => {
     img.addEventListener('click', () => open(img.src, img.alt, img.naturalWidth));
